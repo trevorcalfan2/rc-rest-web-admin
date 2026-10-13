@@ -15,6 +15,10 @@ Route::post('/demo/submit', function () {
 Route::post('/push','Front\PushController@store');
 Route::get('/offline','Front\FrontendController@offline');
 
+Route::get('/prop', function () {
+    return view('prop');
+})->name('front.proposal');
+
 Route::middleware(['setlang'])->group(function () {
     Route::get('/', 'Front\FrontendController@index')->name('front.index');
     Route::get('/callwaiter', 'Front\FrontendController@callwaiter')->name('front.callwaiter');
