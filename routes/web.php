@@ -40,14 +40,13 @@ Route::middleware(['setlang'])->group(function () {
     Route::get('/career', 'Front\FrontendController@career')->name('front.career');
     Route::get('/career-details/{slug}/{id}', 'Front\FrontendController@careerdetails')->name('front.careerdetails');
     Route::get('/calendar', 'Front\FrontendController@calendar')->name('front.calendar');
-    Route::get('/gallery', 'Front\FrontendController@gallery')->name('front.gallery');
     Route::get('/faq', 'Front\FrontendController@faq')->name('front.faq');
     // Dynamic Page Routes
     Route::get('/{slug}/{id}/page', 'Front\FrontendController@dynamicPage')->name('front.dynamicPage');
     Route::get('/changelanguage/{lang}/{type?}', 'Front\FrontendController@changeLanguage')->name('changeLanguage');
 
     // Product
-    Route::get('/product', 'Front\ProductController@product')->name('front.product');
+    Route::get('/product', 'Front\ProductController@product')->name('front.product.legacy');
     Route::get('/cart', 'Front\ProductController@cart')->name('front.cart');
     Route::get('/add-to-cart/{id}', 'Front\ProductController@addToCart')->name('add.cart');
     Route::post('/cart/update', 'Front\ProductController@updatecart')->name('cart.update');
@@ -68,7 +67,6 @@ Route::middleware(['setlang'])->group(function () {
 Route::get('/teams', 'Front\FrontendController@teams')->name('front.teams');
 
 // review
-Route::post('product/review/submit', 'Front\ReviewController@reviewsubmit')->name('product.review.submit');
 
 
 
@@ -76,12 +74,6 @@ Route::post('product/review/submit', 'Front\ReviewController@reviewsubmit')->nam
 Route::get('/items', 'Front\ProductController@items')->name('front.items');
 Route::get('/menus', 'Front\ProductController@product')->name('front.product');
 Route::get('/{slug}/{id}/item', 'Front\ProductController@productDetails')->name('front.product.details');
-Route::get('/cart', 'Front\ProductController@cart')->name('front.cart');
-Route::get('/add-to-cart/{id}', 'Front\ProductController@addToCart')->name('add.cart');
-Route::post('/cart/update', 'Front\ProductController@updatecart')->name('cart.update');
-Route::get('/cart/item/remove/{id}', 'Front\ProductController@cartitemremove')->name('cart.item.remove');
-Route::get('/checkout', 'Front\ProductController@checkout')->name('front.checkout');
-Route::get('/checkout/{slug}', 'Front\ProductController@Prdouctcheckout')->name('front.product.checkout');
 
 // CHECKOUT SECTION
 Route::get('/product/{orderNum}/payment/return', 'Payment\product\PaymentController@payreturn')->name('product.payment.return');
@@ -530,8 +522,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
 
 
         // Admin Menu Section Routes
-        Route::get('/menu/section', 'Admin\BasicController@menusection')->name('admin.menusection.index');
-        Route::post('/menu/section/{langid}/update', 'Admin\BasicController@menusectionUpdate')->name('admin.menusection.update');
 
         // Admin Member Routes
         Route::get('/members', 'Admin\MemberController@index')->name('admin.member.index');
@@ -671,7 +661,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
         Route::get('/subcategory/{id}/edit', 'Admin\ProductSubCategory@edit')->name('admin.subcategory.edit');
         Route::post('/subcategory/update', 'Admin\ProductSubCategory@update')->name('admin.subcategory.update');
         Route::post('/subcategory/delete', 'Admin\ProductSubCategory@delete')->name('admin.subcategory.delete');
-        Route::post('/subcategory/bulk-delete', 'Admin\ProductSubCategory@bulkDelete')->name('admin.pcategory.bulk.delete');
+        Route::post('/subcategory/bulk-delete', 'Admin\ProductSubCategory@bulkDelete')->name('admin.subcategory.bulk.delete');
         Route::post('/subcategory/feature', 'Admin\ProductSubCategory@FeatureCheck')->name('admin.subcategory.feature');
 
 
@@ -696,17 +686,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'checkstatus']
         Route::post('/product/sliderrmv', 'Admin\ProductController@sliderrmv')->name('admin.product.sliderrmv');
         Route::get('product/{id}/getcategory', 'Admin\ProductController@getCategory')->name('admin.product.getcategory');
         Route::get('product/{id}/getSubcategory', 'Admin\ProductController@getSubcategory')->name('admin.product.getSubcategory');
-        Route::post('/product/delete', 'Admin\ProductController@delete')->name('admin.product.delete');
         Route::post('/product/bulk-delete', 'Admin\ProductController@bulkDelete')->name('admin.product.bulk.delete');
         Route::post('/product/sliderupdate', 'Admin\ProductController@sliderupdate')->name('admin.product.sliderupdate');
-        Route::post('/product/update', 'Admin\ProductController@update')->name('admin.product.update');
         Route::get('/product/{id}/images', 'Admin\ProductController@images')->name('admin.product.images');
     });
 
 
     Route::group(['middleware' => 'checkpermission:Order Management'], function () {
         // Serving Methods
-        Route::get('/product/order/serving-methods', 'Admin\ProductOrderController@servingMethods')->name('admin.product.servingMethods');
         Route::get('/product/order/serving-methods', 'Admin\ProductOrderController@servingMethods')->name('admin.product.servingMethods');
         Route::post('/product/order/serving-method/status', 'Admin\ProductOrderController@servingMethodStatus')->name('admin.product.servingMethodStatus');
         Route::post('/product/order/serving-method/gateways', 'Admin\ProductOrderController@servingMethodGateways')->name('admin.product.servingMethodGateways');

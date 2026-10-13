@@ -70,7 +70,7 @@
                             <a href="#" class="btn btn-primary float-right btn-sm" data-toggle="modal"
                                 data-target="#createModal"><i class="fas fa-plus"></i> Add Sub Category</a>
                             <button class="btn btn-danger float-right btn-sm mr-2 d-none bulk-delete"
-                                data-href="{{ route('admin.pcategory.bulk.delete') }}"><i class="flaticon-interface-5"></i>
+                                data-href="{{ route('admin.subcategory.bulk.delete') }}"><i class="flaticon-interface-5"></i>
                                 Delete</button>
                         </div>
                     </div>
